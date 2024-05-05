@@ -1,11 +1,24 @@
-import React from 'react'
+import React, { lazy, Suspense } from "react";
+import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
+import PrivateRoute from "./components/login/PrivateRoutes";
+
+const Login = lazy(() => import("./pages/login"));
+const Layout = lazy(() => import("./layout/Layout"));
 
 const App = () => {
   return (
-    <h1 className="text-3xl font-bold underline">
-    Initial Setup Done!
-  </h1>
-  )
-}
+    <Router>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Switch>
+          <Route path="/login" component={Login} />
+          <PrivateRoute>
+            <Route path="/" component={Layout} />
+          </PrivateRoute>
+          <Redirect to="/login" />
+        </Switch>
+      </Suspense>
+    </Router>
+  );
+};
 
-export default App
+export default App;
