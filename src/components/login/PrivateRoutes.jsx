@@ -4,14 +4,13 @@ import { useSelector } from "react-redux";
 import env from "react-dotenv";
 
 const PrivateRoute = ({ children, ...rest }) => {
-  const state = {
-    mobile: true,
-  };
+  const user = localStorage.getItem("user");
+  // const user = true
   return (
     <Route
       {...rest}
       render={({ location }) =>
-        state?.mobile ? (
+        user ? (
           children
         ) : (
           <Redirect
